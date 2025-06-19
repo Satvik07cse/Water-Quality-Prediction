@@ -17,6 +17,7 @@ Develop a pipeline using MultiOutputRegressor wrapped around RandomForestRegress
 Evaluate performance using regression metrics
 
 🔬 Predicted Water Quality Parameters
+
 The model predicts the following parameters:
 
 NH4 (Ammonium)
@@ -36,6 +37,7 @@ PO4 (Phosphates)
 CL (Chloride)
 
 ⚙️ Technologies Used
+
 Python 3.12
 
 Pandas, NumPy – Data handling
@@ -47,18 +49,23 @@ Matplotlib, Seaborn – Data visualization
 Jupyter Notebook – Interactive development environment
 
 📈 Model Architecture
+
 Base Model: RandomForestRegressor
 
 Wrapper: MultiOutputRegressor
 
 Pipeline: Preprocessing → Model Training → Multi-target Prediction
+
 📊 Evaluation Metrics
+
 R² Score
 
 Mean Squared Error (MSE)
 
 ✅ The model demonstrated consistent performance across all predicted parameters, indicating good generalization on unseen data.
+
 🎓 Internship Details
+
 Type: AICTE Virtual Internship
 
 Platform: Edunet Foundation
