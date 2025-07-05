@@ -19,7 +19,7 @@ else:
 # Load dataset
 @st.cache_data
 def load_data():
-    return pd.read_csv("PB_All_2000_2021.csv")
+    return pd.read_csv("PB_All_2000_2021.csv"sep=';')
 
 df = load_data()
 st.write("🧾 Columns in dataset:", df.columns.tolist())
