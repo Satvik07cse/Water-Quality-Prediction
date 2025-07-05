@@ -9,8 +9,18 @@ import streamlit as st
 model = joblib.load("pollution_model.pkl")
 model_cols=joblib.load("model_columns.pkl")
 #user interface 
-st.title("Water Quality Prediction App")
 
+@st.cache_data
+def load_data():
+    return pd.read_csv("datasetwaterquality.csv")
+
+df = load_data()
+
+if 'date' in df.columns:
+    df['date'] = pd.to_datetime(df['date'], errors='coerce')
+    df['year'] = df['date'].dt.year
+
+st.title("Water Quality Prediction App")
 st.write("This app predicts the water quality based on year and station ID.")
 st.write("✅ App started")  # Debug line
 
@@ -24,7 +34,18 @@ else:
     st.stop()
 #user inputs
 year_input =st.number_input("enter the year",min_value=200,max_value=2100,value=2022)
-station_id=st.text_input("enter the station ID",value='1')
+station_mapping = {
+    "1": "Ganga - Kanpur",
+    "2": "Yamuna - Delhi",
+    "3": "Mithi - Mumbai",
+    "4": "Hooghly - Kolkata",
+    "5": "Sabarmati - Ahmedabad"
+    # Add all from your dataset
+}
+
+station_name = st.selectbox("Select a Station", list(station_mapping.values()))
+station_id = [k for k, v in station_mapping.items() if v == station_name][0]
+
 #button to predict
 if st.button('predict'):
     if not station_id:
@@ -43,3 +64,11 @@ if st.button('predict'):
         predicted_values={}
         for p, val in zip(pollutants, predicted_pollutants[0]):
             st.write(f'{p}: {val:.2f}')
+            # Pollution Trend Chart
+df_filtered = df[df['id'].astype(str) == station_id]
+
+pollutants = ["O2", "NO3", "NO2", "SO4", "PO4", "CL"]
+trend_data = df_filtered.groupby("year")[pollutants].mean().reset_index()
+
+st.subheader(f"📈 Pollution Trends Over Years at {station_name}")
+st.line_chart(trend_data.set_index("year"))
