@@ -66,4 +66,3 @@ if st.button("🔮 Predict"):
             st.line_chart(trend_data.set_index("year"))
         except KeyError:
             st.warning("⚠️ Couldn't generate trend chart. Ensure 'id' and pollutant columns exist.")
-
