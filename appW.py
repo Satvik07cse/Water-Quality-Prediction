@@ -12,7 +12,7 @@ model_cols=joblib.load("model_columns.pkl")
 
 @st.cache_data
 def load_data():
-    return pd.read_csv("datasetwaterquality.csv")
+    return pd.read_csv("PB_All_2000_2021.csv")
 
 df = load_data()
 
@@ -64,7 +64,7 @@ if st.button('predict'):
         predicted_values={}
         for p, val in zip(pollutants, predicted_pollutants[0]):
             st.write(f'{p}: {val:.2f}')
-            # Pollution Trend Chart
+# Pollution Trend Chart
 df_filtered = df[df['id'].astype(str) == station_id]
 
 pollutants = ["O2", "NO3", "NO2", "SO4", "PO4", "CL"]
